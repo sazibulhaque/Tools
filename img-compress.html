@@ -3,270 +3,227 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Compress images online for free with adjustable quality settings. Optimize your web images for better performance and SEO ranking.">
-    <title>Image Compressor Pro | Web Optimization Tool</title>
+    <title>Image Compressor</title>
     <style>
         :root {
-            --primary: #2563eb;
-            --secondary: #4f46e5;
-            --accent: #6366f1;
+            --primary: #6366f1;
+            --primary-hover: #4f46e5;
             --background: #f8fafc;
+            --card-bg: #ffffff;
             --text: #1e293b;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-        }
-
         body {
-            background: linear-gradient(135deg, #f1f5f9 0%, #e2e8f0 100%);
-            color: var(--text);
+            font-family: 'Inter', sans-serif;
+            background: var(--background);
             min-height: 100vh;
+            margin: 0;
+            padding: 2rem;
         }
 
         .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 2rem 1.5rem;
-        }
-
-        .header {
-            text-align: center;
-            margin-bottom: 3rem;
-        }
-
-        .header h1 {
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .header p {
-            font-size: 1.1rem;
-            color: #64748b;
-            max-width: 600px;
+            max-width: 1200px;
             margin: 0 auto;
         }
 
-        .main-grid {
-            display: grid;
-            grid-template-columns: 1fr 300px;
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .card {
-            background: white;
+        .main-card {
+            background: var(--card-bg);
             border-radius: 1rem;
             padding: 2rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -4px rgba(0, 0, 0, 0.1);
-            transition: transform 0.2s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
         }
 
-        .card:hover {
-            transform: translateY(-2px);
-        }
-
-        .file-input {
-            width: 100%;
-            height: 200px;
+        .upload-section {
             border: 2px dashed #cbd5e1;
-            border-radius: 1rem;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            background: #f8fafc;
-            margin-bottom: 2rem;
+            border-radius: 0.75rem;
+            padding: 2rem;
+            text-align: center;
+            margin: 1rem 0;
+            transition: border-color 0.3s ease;
         }
 
-        .file-input:hover {
+        .upload-section:hover {
             border-color: var(--primary);
-            background: rgba(37, 99, 235, 0.05);
         }
 
-        .preview-image {
-            width: 100%;
-            max-width: 400px;
-            height: auto;
-            border-radius: 0.5rem;
-            margin: 1.5rem 0;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        #fileInput {
+            display: none;
         }
 
-        .quality-slider {
-            width: 100%;
-            -webkit-appearance: none;
-            height: 8px;
-            border-radius: 4px;
-            background: #e2e8f0;
-            outline: none;
-            margin: 1.5rem 0;
-        }
-
-        .quality-slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: 20px;
-            height: 20px;
+        .custom-upload-btn {
             background: var(--primary);
-            border-radius: 50%;
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .quality-control {
+            margin: 2rem 0;
+        }
+
+        .preview-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .file-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            text-align: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .compress-btn {
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 0.5rem;
             cursor: pointer;
             transition: background 0.3s ease;
         }
 
-        .quality-slider::-webkit-slider-thumb:hover {
-            background: var(--secondary);
-        }
-
-        .btn {
-            background: var(--primary);
-            color: white;
-            padding: 0.75rem 2rem;
-            border: none;
-            border-radius: 0.5rem;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            width: 100%;
-            justify-content: center;
-        }
-
-        .btn:hover {
-            background: var(--secondary);
-            transform: translateY(-1px);
-            box-shadow: 0 4px 6px -1px rgba(37, 99, 235, 0.3);
-        }
-
-        .stats {
-            background: #f1f5f9;
-            padding: 1.5rem;
-            border-radius: 0.5rem;
-            margin-top: 1.5rem;
-        }
-
-        .ad-section {
-            background: white;
-            border-radius: 1rem;
-            padding: 1.5rem;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-            height: fit-content;
-        }
-
-        @media (max-width: 1024px) {
-            .main-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .ad-section {
-                order: -1;
-                max-width: 600px;
-                margin: 0 auto 2rem;
-            }
-
-            .header h1 {
-                font-size: 2rem;
-            }
-        }
-
-        .progress-bar {
-            width: 100%;
-            height: 8px;
-            background: #e2e8f0;
-            border-radius: 4px;
-            overflow: hidden;
-            margin: 1rem 0;
-            display: none;
-        }
-
-        .progress {
-            width: 0%;
-            height: 100%;
-            background: var(--primary);
-            transition: width 0.3s ease;
+        .compress-btn:hover {
+            background: var(--primary-hover);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header class="header">
-            <h1>Image Compressor Pro</h1>
-            <p>Optimize your images for web performance with lossless compression and instant downloads</p>
-        </header>
+        <div class="main-card">
+            <h1>Image Compressor</h1>
+            
+            <div class="upload-section">
+                <label class="custom-upload-btn">
+                    📁 Choose Image
+                    <input type="file" id="fileInput" accept="image/*">
+                </label>
+                <p style="margin-top: 1rem; color: #64748b;">
+                    Supported formats: JPEG, PNG, WEBP
+                </p>
+            </div>
 
-        <div class="main-grid">
-            <main>
-                <div class="card">
-                    <div class="file-input" onclick="document.getElementById('imageInput').click()">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-upload">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                            <polyline points="17 8 12 3 7 8"/>
-                            <line x1="12" x2="12" y1="3" y2="15"/>
-                        </svg>
-                        <p class="drag-text">Click to upload or drag and drop</p>
-                        <p class="file-types">(JPEG, PNG, WEBP)</p>
-                    </div>
-                    <input type="file" id="imageInput" accept="image/*" hidden>
-
-                    <img id="preview" class="preview-image" alt="Preview">
-
-                    <label class="quality-label">Quality: <span id="qualityValue">80</span>%</label>
-                    <input type="range" id="quality" class="quality-slider" min="1" max="100" value="80">
-
-                    <div class="progress-bar">
-                        <div class="progress"></div>
-                    </div>
-
-                    <button class="btn" onclick="compressImage()">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-zap">
-                            <polyline points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
-                        </svg>
-                        Compress Now
-                    </button>
-
-                    <div id="output" class="stats"></div>
+            <div class="quality-control">
+                <div style="display: flex; justify-content: space-between;">
+                    <span>Compression Quality</span>
+                    <span id="qualityValue">80%</span>
                 </div>
-            </main>
+                <input type="range" id="quality" min="1" max="100" value="80" 
+                       style="width: 100%; margin-top: 0.5rem;">
+            </div>
 
-            <aside class="ad-section">
-                <!-- Google AdSense Unit -->
-                <ins class="adsbygoogle"
-                    style="display:block"
-                    data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
-                    data-ad-slot="XXXXXXXXXX"
-                    data-ad-format="auto"
-                    data-full-width-responsive="true"></ins>
-            </aside>
+            <div class="preview-container">
+                <div class="file-card">
+                    <h3>Original File</h3>
+                    <div id="originalSize">-</div>
+                </div>
+                <div class="file-card">
+                    <h3>Compressed File</h3>
+                    <div id="compressedSize">-</div>
+                </div>
+            </div>
+
+            <button class="compress-btn" id="compressBtn">Compress Image</button>
+            <a id="downloadLink" class="compress-btn" style="display: none; margin-top: 1rem;">
+                Download Compressed Image
+            </a>
         </div>
     </div>
 
     <script>
-        // Previous JavaScript code with added progress animation
-        const updateProgress = (percentage) => {
-            const progress = document.querySelector('.progress');
-            progress.style.width = `${percentage}%`;
-        };
+        const fileInput = document.getElementById('fileInput');
+        const qualitySlider = document.getElementById('quality');
+        const qualityValue = document.getElementById('qualityValue');
+        const compressBtn = document.getElementById('compressBtn');
+        const downloadLink = document.getElementById('downloadLink');
+        const originalSize = document.getElementById('originalSize');
+        const compressedSize = document.getElementById('compressedSize');
 
-        async function compressImage() {
-            // Show progress bar
-            const progressBar = document.querySelector('.progress-bar');
-            progressBar.style.display = 'block';
-            updateProgress(30);
+        qualitySlider.addEventListener('input', () => {
+            qualityValue.textContent = `${qualitySlider.value}%`;
+        });
 
-            // Compression logic here...
-            
-            // Simulate progress
-            setTimeout(() => updateProgress(70), 500);
-            setTimeout(() => updateProgress(100), 1000);
+        compressBtn.addEventListener('click', async () => {
+            const file = fileInput.files[0];
+            if (!file) {
+                alert('Please select an image first!');
+                return;
+            }
+
+            compressBtn.disabled = true;
+            compressBtn.textContent = 'Compressing...';
+
+            try {
+                const compressedBlob = await compressImage(file, qualitySlider.value);
+                
+                compressedSize.textContent = `${(compressedBlob.size / 1024).toFixed(1)} KB`;
+                downloadLink.href = URL.createObjectURL(compressedBlob);
+                downloadLink.download = `compressed_${file.name}`;
+                downloadLink.style.display = 'block';
+            } catch (error) {
+                alert('Error compressing image: ' + error.message);
+            } finally {
+                compressBtn.disabled = false;
+                compressBtn.textContent = 'Compress Image';
+            }
+        });
+
+        fileInput.addEventListener('change', (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                originalSize.textContent = `${(file.size / 1024).toFixed(1)} KB`;
+                compressedSize.textContent = '-';
+                downloadLink.style.display = 'none';
+            }
+        });
+
+        function compressImage(file, quality) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        
+                        // Calculate new dimensions
+                        let width = img.width;
+                        let height = img.height;
+                        const maxDimension = 2000;
+                        
+                        if (width > maxDimension || height > maxDimension) {
+                            const ratio = Math.min(maxDimension / width, maxDimension / height);
+                            width = width * ratio;
+                            height = height * ratio;
+                        }
+
+                        canvas.width = width;
+                        canvas.height = height;
+                        ctx.drawImage(img, 0, 0, width, height);
+
+                        canvas.toBlob((blob) => {
+                            if (!blob) {
+                                reject(new Error('Compression failed'));
+                                return;
+                            }
+                            resolve(blob);
+                        }, 'image/jpeg', quality / 100);
+                    };
+                    img.onerror = reject;
+                    img.src = e.target.result;
+                };
+                reader.onerror = reject;
+                reader.readAsDataURL(file);
+            });
         }
     </script>
 </body>
